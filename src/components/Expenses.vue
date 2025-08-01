@@ -38,6 +38,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { getAllExpenses, deleteExpense } from "../store/index.js";
+import Swal from 'sweetalert2';
 
 export default {
   name: "Expenses",
@@ -49,10 +50,19 @@ export default {
     });
 
     const onDelete = async (id) => {
-      const deleteConfirm = window.confirm("Are you sure to delete this expense?");
-      if (deleteConfirm) {
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to delete this expense?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      });
+      if (result.isConfirmed) {
         await deleteExpense(id);
         expenses.value = expenses.value.filter((expense) => expense._id !== id);
+        Swal.fire('Deleted!', 'Expense has been deleted.', 'success');
       }
     };
 
