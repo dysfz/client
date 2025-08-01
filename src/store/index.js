@@ -1,7 +1,9 @@
 //* import axios (to call API)
 const axios = require('axios')
 
-//* set expense (server) url (endpoint)
+//local backend endpoint
+//const baseUrl = "http://localhost:8080"
+//cloud backend endpoint
 const baseUrl = "https://expense-tracker-nong.onrender.com"
 const expenseUrl = `${expenseUrl}/expenses/`
 
