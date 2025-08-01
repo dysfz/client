@@ -16,7 +16,7 @@
           <td>{{ expense.category }}</td>
           <td>{{ expense.description }}</td>
           <td>{{ expense.amount }}</td>
-          <td>{{ expense.date }}</td>
+          <td>{{ formatDate(expense.date) }}</td>
           <td width="75">
             <router-link
               class="ui button yellow"
@@ -44,19 +44,14 @@ export default {
   setup() {
     const expenses = ref([]);
 
-    //display all expenses
     onMounted(async () => {
       expenses.value = (await getAllExpenses()) || [];
     });
 
-    //delete expense by id
     const onDelete = async (id) => {
-      //show confirmation before deletion
       const deleteConfirm = window.confirm("Are you sure to delete this expense?");
       if (deleteConfirm) {
-        //delete expense using API
         await deleteExpense(id);
-        //refresh expense list after deletion
         expenses.value = expenses.value.filter((expense) => expense._id !== id);
       }
     };
@@ -65,6 +60,15 @@ export default {
       expenses,
       onDelete,
     };
+  },
+  methods: {
+    formatDate(date) {
+      return new Date(date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+    },
   },
 };
 </script>
