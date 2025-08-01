@@ -36,7 +36,7 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { viewExpenseById, editExpense } from "../store/index.js";
+import { getExpenseById, editExpense } from "../store/index.js";
 
 export default {
   name: "Edit",
@@ -46,7 +46,7 @@ export default {
     const router = useRouter();
 
     onMounted(async () => {
-      const result = await viewExpenseById(route.params.id);
+      const result = await getExpenseById(route.params.id);
       if (result === null) {
         alert("Failed to load expense data. Please try again later.");
         expense.value = {};
