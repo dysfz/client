@@ -3,7 +3,7 @@ const axios = require('axios')
 
 //* set expense (server) url (endpoint)
 const baseUrl = "https://expense-tracker-nong.onrender.com"
-const expenseUrl = '${expenseUrl}/expenses/'
+const expenseUrl = `${expenseUrl}/expenses/`
 
 //* call API from expense
 export const getAllExpenses = async () => {
