@@ -37,6 +37,7 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getExpenseById, editExpense } from "../store/index.js";
+import Swal from 'sweetalert2';
 
 export default {
   name: "Edit",
@@ -44,11 +45,13 @@ export default {
     const expense = ref({});
     const route = useRoute();
     const router = useRouter();
+    const success = ref(false);
+    const error = ref('');
 
     onMounted(async () => {
       const result = await getExpenseById(route.params.id);
       if (result === null) {
-        alert("Failed to load expense data. Please try again later.");
+        Swal.fire("Failed to load expense data. Please try again later.", '', 'error');
         expense.value = {};
       } else {
         expense.value = result;
@@ -58,15 +61,18 @@ export default {
     const onSubmit = async () => {
       const result = await editExpense(route.params.id, expense.value);
       if (result === null) {
-        alert("Failed to update expense. Please try again later.");
+        Swal.fire("Failed to update expense. Please try again later.", '', 'error');
         return;
       }
+      await Swal.fire('Success!', 'Expense updated successfully!', 'success');
       router.push('/expenses');
     };
 
     return {
       expense,
-      onSubmit
+      onSubmit,
+      success,
+      error
     };
   }
 };
