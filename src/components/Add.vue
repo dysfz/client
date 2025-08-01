@@ -1,67 +1,60 @@
 <template>
   <div class="add-expense">
-    <h2>Add New Expense</h2>
-    <form @submit.prevent="submitExpense">
-      <div class="field">
-        <label for="title">Title</label>
-        <input id="title" v-model="expense.title" required />
+    <h1>Add New Expense</h1>
+    <form @submit.prevent="onSubmit">
+      <div class="ui labeled input fluid">
+        <div class="ui label"> Category</div>
+        <input type="text" v-model="expense.category" required />
       </div>
-      <div class="field">
-        <label for="amount">Amount</label>
-        <input id="amount" v-model.number="expense.amount" type="number" min="0" step="0.01" required />
+      <br />
+      <div class="ui labeled input fluid">
+        <div class="ui label"> Description</div>
+        <input type="text" v-model="expense.description" required />
       </div>
-      <div class="field">
-        <label for="date">Date</label>
+      <br />
+      <div class="ui labeled input fluid">
+        <div class="ui label"> Amount</div>
+        <input type="number" v-model.number="expense.amount" min="0" step="0.01" required />
+      </div>
+      <br />
+      <div class="ui labeled input fluid">
+        <div class="ui label"> Date</div>
         <input id="date" v-model="expense.date" type="date" required />
       </div>
-      <div class="field">
-        <label for="category">Category</label>
-        <input id="category" v-model="expense.category" required />
-      </div>
+      <br />
       <button type="submit">Add Expense</button>
     </form>
-    <div v-if="success" class="success-message">
-      Expense added successfully!
-    </div>
-    <div v-if="error" class="error-message">
-      {{ error }}
-    </div>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { addNewExpense } from "../store/index.js";
+import Swal from 'sweetalert2';
+
 export default {
-  name: 'AddExpense',
-  data() {
-    return {
-      expense: {
-        title: '',
-        amount: null,
-        date: '',
-        category: ''
-      },
-      success: false,
-      error: ''
+  name: "Add",
+  setup() {
+    const expense = ref({
+      category: '',
+      description: '',
+      amount: null,
+      date: ''
+    });
+    const router = useRouter();
+
+    const onSubmit = async () => {
+      await addNewExpense(expense.value);
+      Swal.fire("Add new expense succeed").then(() => {
+        router.push('/expenses');
+      });
     };
-  },
-  methods: {
-    async submitExpense() {
-      this.success = false;
-      this.error = '';
-      try {
-        // Replace the URL with your actual API endpoint
-        const response = await fetch('/api/expenses', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(this.expense)
-        });
-        if (!response.ok) throw new Error('Failed to add expense');
-        this.success = true;
-        this.expense = { title: '', amount: null, date: '', category: '' };
-      } catch (err) {
-        this.error = err.message;
-      }
-    }
+
+    return {
+      expense,
+      onSubmit
+    };
   }
 };
 </script>
@@ -71,11 +64,12 @@ export default {
   max-width: 400px;
   margin: 40px auto;
   padding: 32px 24px;
-  background: #f9f9f9;
+  background: #393e46;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  color: #eeeeee;
 }
-.field {
+.ui labeled input fluid {
   margin-bottom: 18px;
   text-align: left;
 }
@@ -89,6 +83,8 @@ input {
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  background: #222831;
+  color: #eeeeee;
 }
 button {
   background: #42b983;
@@ -98,16 +94,9 @@ button {
   border-radius: 4px;
   cursor: pointer;
   font-size: 1em;
+  width: 100%;
 }
 button:hover {
-  background: #2c3e50;
-}
-.success-message {
-  color: #27ae60;
-  margin-top: 16px;
-}
-.error-message {
-  color: #e74c3c;
-  margin-top: 16px;
+  background: #36a372;
 }
 </style>

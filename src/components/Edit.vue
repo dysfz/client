@@ -1,28 +1,28 @@
 <template>
   <div class="edit-expense">
-    <h2>Edit Expense</h2>
-    <form @submit.prevent="editExpense">
-      <div class="field">
-        <label for="id">Expense ID</label>
-        <input id="id" v-model="expenseId" required />
+    <h1>Edit Expense</h1>
+    <form @submit.prevent="onSubmit">
+      <div class="ui labeled input fluid">
+        <div class="ui label"> Category</div>
+        <input type="text" v-model="expense.category" required />
       </div>
-      <div class="field">
-        <label for="title">Title</label>
-        <input id="title" v-model="expense.title" />
+      <br />
+      <div class="ui labeled input fluid">
+        <div class="ui label"> Description</div>
+        <input type="text" v-model="expense.description" required />
       </div>
-      <div class="field">
-        <label for="amount">Amount</label>
-        <input id="amount" v-model.number="expense.amount" type="number" min="0" step="0.01" />
+      <br />
+      <div class="ui labeled input fluid">
+        <div class="ui label"> Amount</div>
+        <input type="number" v-model.number="expense.amount" min="0" step="0.01" required />
       </div>
-      <div class="field">
-        <label for="date">Date</label>
-        <input id="date" v-model="expense.date" type="date" />
+      <br />
+      <div class="ui labeled input fluid">
+        <div class="ui label"> Date</div>
+        <input id="date" v-model="expense.date" type="date" required />
       </div>
-      <div class="field">
-        <label for="category">Category</label>
-        <input id="category" v-model="expense.category" />
-      </div>
-      <button type="submit">Update</button>
+      <br />
+      <button class="ui primary button">Submit</button>
     </form>
     <div v-if="success" class="success-message">
       Expense updated successfully!
@@ -34,59 +34,40 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { viewExpenseById, editExpense } from "../store/index.js";
+
 export default {
-  name: 'EditExpense',
-  data() {
-    return {
-      expenseId: '',
-      expense: {
-        title: '',
-        amount: null,
-        date: '',
-        category: ''
-      },
-      success: false,
-      error: ''
+  name: "Edit",
+  setup() {
+    const expense = ref({});
+    const route = useRoute();
+    const router = useRouter();
+
+    onMounted(async () => {
+      const result = await viewExpenseById(route.params.id);
+      if (result === null) {
+        alert("Failed to load expense data. Please try again later.");
+        expense.value = {};
+      } else {
+        expense.value = result;
+      }
+    });
+
+    const onSubmit = async () => {
+      const result = await editExpense(route.params.id, expense.value);
+      if (result === null) {
+        alert("Failed to update expense. Please try again later.");
+        return;
+      }
+      router.push('/expenses');
     };
-  },
-  watch: {
-    expenseId(newId) {
-      this.success = false;
-      this.error = '';
-      if (newId) {
-        this.fetchExpense(newId);
-      }
-    }
-  },
-  methods: {
-    async fetchExpense(id) {
-      try {
-        const response = await fetch(`/api/expenses/${id}`);
-        if (!response.ok) throw new Error('Expense not found');
-        const data = await response.json();
-        // Format date for input[type="date"]
-        data.date = data.date ? data.date.substr(0, 10) : '';
-        this.expense = data;
-      } catch (err) {
-        this.error = err.message;
-        this.expense = { title: '', amount: null, date: '', category: '' };
-      }
-    },
-    async editExpense() {
-      this.success = false;
-      this.error = '';
-      try {
-        const response = await fetch(`/api/expenses/${this.expenseId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(this.expense)
-        });
-        if (!response.ok) throw new Error('Failed to update expense');
-        this.success = true;
-      } catch (err) {
-        this.error = err.message;
-      }
-    }
+
+    return {
+      expense,
+      onSubmit
+    };
   }
 };
 </script>
