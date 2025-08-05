@@ -2,7 +2,7 @@
   <div class="expenses-text">
     <h1>Expenses List</h1>
   </div>
-  <div>
+  <div class="logs-expense">
     <table class="ui celled compact table">
       <thead>
         <tr>
@@ -100,7 +100,7 @@ export default {
   background: #fff;
   border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-  text-align: center;
+  text-align: left;
 }
 .expenses-text {
   color: #eeeeee;
