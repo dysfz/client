@@ -53,6 +53,7 @@ export default {
       if (result === null) {
         Swal.fire("Failed to load expense data. Please try again later.", '', 'error');
         expense.value = {};
+        router.push('/expenses');
       } else {
         expense.value = result;
       }
