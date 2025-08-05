@@ -46,7 +46,7 @@ export default {
 
     const onSubmit = async () => {
       await addNewExpense(expense.value);
-      Swal.fire("Add new expense succeed").then(() => {
+      Swal.fire('Success!', 'Expense added successfully!', 'success').then(() => {
         router.push('/expenses');
       });
     };
