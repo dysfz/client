@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="expenses-table">
     <h1>Expenses List</h1>
     <table class="ui celled compact table">
       <thead>
@@ -99,5 +99,15 @@ export default {
   border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.03);
   text-align: left;
+}
+.expenses-table {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 32px 24px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  text-align: center;
+  color: #eeeeee;
 }
 </style>
