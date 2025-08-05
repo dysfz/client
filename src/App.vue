@@ -6,8 +6,7 @@
     </div>
 
     <div class="main-screen">
-      <h1>Welcome to Expense Tracker</h1>
-      <p>Manage your expenses easily. Choose an action below:</p>
+      <p>Choose an action below:</p>
       <ul class="main-menu">
         <li>
           <router-link to="/expenses" class="main-btn">View All Expenses</router-link>
