@@ -87,6 +87,7 @@ export default {
   background: #f9f9f9;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  text-align: center;
 }
 .field {
   margin-bottom: 18px;

@@ -100,7 +100,7 @@ export default {
   background: #fff;
   border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-  text-align: left;
+  text-align: center;
 }
 .expenses-text {
   color: #eeeeee;
