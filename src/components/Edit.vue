@@ -51,7 +51,7 @@ export default {
     onMounted(async () => {
       const result = await getExpenseById(route.params.id);
       if (result === null) {
-        Swal.fire("Failed to load expense data.", 'This expense might have been deleted.', 'error');
+        Swal.fire("Failed to load selected data.", 'This log might have been deleted.', 'error');
         expense.value = {};
         router.push('/expenses');
       } else {
@@ -62,7 +62,7 @@ export default {
     const onSubmit = async () => {
       const result = await editExpense(route.params.id, expense.value);
       if (result === null) {
-        Swal.fire("Failed to update expense.", 'Try double-checking the values before submitting.', 'error');
+        Swal.fire("Failed to update selected log.", 'Try double-checking the values before submitting.', 'error');
         return;
       }
       await Swal.fire('Success!', 'Expense updated successfully!', 'success');
