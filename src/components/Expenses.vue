@@ -2,38 +2,39 @@
   <div class="expenses-text">
     <h1>Expenses List</h1>
   </div>
-  <div class="logs-expense">
-    <table class="ui celled compact table">
-      <thead>
-        <tr>
-          <th>Category</th>
-          <th>Description</th>
-          <th>Amount</th>
-          <th>Date</th>
-          <th colspan="3">Menu</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(expense, index) in expenses" :key="index">
-          <td>{{ expense.category }}</td>
-          <td>{{ expense.description }}</td>
-          <td>{{ expense.amount }}</td>
-          <td>{{ formatDate(expense.date) }}</td>
-          <td width="75">
-            <router-link
-              class="ui button yellow"
-              :to="{ name: 'Edit', params: { id: expense._id } }"
-              >Edit</router-link
-            >
-          </td>
-          <td width="75">
-            <a @click.prevent="onDelete(expense._id)" class="ui red button"
-              >Delete</a
-            >
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div style="display: flex; justify-content: center;">
+      <table class="ui celled compact table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th colspan="3">Menu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(expense, index) in expenses" :key="index">
+            <td>{{ expense.category }}</td>
+            <td>{{ expense.description }}</td>
+            <td>{{ expense.amount }}</td>
+            <td>{{ formatDate(expense.date) }}</td>
+            <td width="75">
+              <router-link
+                class="ui button yellow"
+                :to="{ name: 'Edit', params: { id: expense._id } }"
+                >Edit</router-link
+              >
+            </td>
+            <td width="75">
+              <a @click.prevent="onDelete(expense._id)" class="ui red button"
+                >Delete</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -103,6 +104,7 @@ export default {
   text-align: left;
 }
 .expenses-text {
+  text-align: center;
   color: #eeeeee;
 }
 </style>
