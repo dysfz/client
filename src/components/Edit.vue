@@ -16,6 +16,7 @@
         <div class="ui label"> Amount</div>
         <input type="number" v-model.number="expense.amount" min="0" step="0.01" required />
       </div>
+      <br />
       <div class="ui labeled input fluid">
         <div class="ui label"> Category</div>
         <input type="text" v-model="expense.category" required />
