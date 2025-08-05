@@ -6,18 +6,20 @@
       <table class="ui celled compact table">
         <thead>
           <tr>
-            <th>Category</th>
+            <th>Name</th>
             <th>Description</th>
             <th>Amount</th>
+            <th>Category</th>
             <th>Date</th>
             <th colspan="3">Menu</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(expense, index) in expenses" :key="index">
-            <td>{{ expense.category }}</td>
+            <td>{{ expense.name }}</td>
             <td>{{ expense.description }}</td>
             <td>{{ expense.amount }}</td>
+            <td>{{ expense.category }}</td>
             <td>{{ formatDate(expense.date) }}</td>
             <td width="75">
               <router-link

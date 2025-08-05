@@ -3,8 +3,8 @@
     <h1>Add New Expense</h1>
     <form @submit.prevent="onSubmit">
       <div class="ui labeled input fluid">
-        <div class="ui label"> Category</div>
-        <input type="text" v-model="expense.category" required />
+        <div class="ui label"> Name</div>
+        <input type="text" v-model="expense.name" required />
       </div>
       <br />
       <div class="ui labeled input fluid">
@@ -15,6 +15,10 @@
       <div class="ui labeled input fluid">
         <div class="ui label"> Amount</div>
         <input type="number" v-model.number="expense.amount" min="0" step="0.01" required />
+      </div>
+      <div class="ui labeled input fluid">
+        <div class="ui label"> Category</div>
+        <input type="text" v-model="expense.category" required />
       </div>
       <br />
       <div class="ui labeled input fluid">
@@ -37,9 +41,10 @@ export default {
   name: "Add",
   setup() {
     const expense = ref({
-      category: '',
+      name: '',
       description: '',
       amount: null,
+      category: '',
       date: ''
     });
     const router = useRouter();
