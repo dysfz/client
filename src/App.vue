@@ -13,7 +13,7 @@
           <router-link to="/expenses" class="main-btn">View All Expenses</router-link>
         </li>
         <li>
-          <router-link to="/add" class="main-btn">Add New Expense</router-link>
+          <router-link to="/expenses/add" class="main-btn">Add New Expense</router-link>
         </li>
       </ul>
     </div>

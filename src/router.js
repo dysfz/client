@@ -15,12 +15,12 @@ const routes = [
       component: Expenses
    },
    {
-      path: '/add',
+      path: '/expenses/add',
       name: 'Add',
       component: Add
    },
    {
-      path: '/edit/:id',
+      path: '/expenses/edit/:id',
       name: 'Edit',
       component: Edit
    }
